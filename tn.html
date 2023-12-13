@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="">
+      <label for="">name</label>
+      <input id="userName" type="text" />
+      <label for="">ngay sinh</label>
+      <input id="dateOfBirth" type="text" />
+      <label for="">dia chi</label>
+      <input id="address" type="text" />
+      <button id="btnSubmit">them moi</button>
+      <button id="btnLogout">dang xuat</button>
+    </form>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>stt</th>
+          <th>userPass</th>
+          <th>nameID</th>
+          <th>Name</th>
+          <th>Ngay sinh</th>
+          <th>Dia chi</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <script>
+      const userNameInput = document.querySelector("#userName");
+      const dateOfBirthInput = document.querySelector("#dateOfBirth");
+      const addressInput = document.querySelector("#address");
+
+      const tbody = document.querySelector("#tbody");
+      const btnSubmit = document.querySelector("#btnSubmit");
+      const btnLogout = document.querySelector("#btnLogout");
+
+      btnSubmit.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const userLocal = JSON.parse(localStorage.getItem("users")) || [];
+
+        const newUser = {
+          userPass: userNameInput.value,
+          userID: uuidv4(),
+          userName: userNameInput.value,
+          dateOfBirth: dateOfBirthInput.value,
+          address: addressInput.value,
+        };
+
+        userLocal.push(newUser);
+
+        localStorage.setItem("users", JSON.stringify(userLocal));
+        rendedata();
+      });
+
+      btnLogout.addEventListener("click", () => {
+        localStorage.removeItem("users");
+      });
+
+      function rendedata() {
+        const userLocal = JSON.parse(localStorage.getItem("users")) || [];
+        const trHtmls = userLocal.map((u, i) => {
+          return `
+              <tr>  
+                <th>${i + 1}<th>
+                <td>${u.userPass}<td>
+                <td>${u.userID}</td>
+                <td>${u.userName}</td>
+                <td>${u.dateOfBirth}</td>
+                <td>${u.address}</td>
+              </tr>
+          `;
+        });
+        const trHtml = trHtmls.join("");
+        //appen
+        tbody.innerHTML = trHtml;
+      }
+      rendedata();
+    </script>
+
+    <!-- Chat GPT viết lại  -->
+    <!-- Chat GPT viết lại  -->
+    <!-- Chat GPT viết lại  -->
+    <!-- <form>
+  <i id="u" type="text" placeholder="name" required>
+  <i id="d" type="date" placeholder="ngay sinh" required>
+  <i id="a" type="text" placeholder="dia chi" required>
+  <b id="s">them moi</b>
+  <b id="l">dang xuat</b>
+</form>
+<table border="1">
+  <thead>
+    <tr>
+      <th>nameID</th>
+      <th>Name</th>
+      <th>Ngay sinh</th>
+      <th>Dia chi</th>
+    </tr>
+  </thead>
+  <tbody id="t"></tbody>
+</table>
+<script>
+  const [u, d, a, t, s, l] = ["#u", "#d", "#a", "#t", "#s", "#l"].map(document.querySelector.bind(document));
+  s.onclick = e => {
+    e.preventDefault();
+  //sau khi click lấy dữ liệu (get) về chuyển sang type js rồi khai báo mảng dữ liệu
+    const users = JSON.parse(localStorage.getItem("users")) ?? [];
+    //khai báo  đối tượng dạng gồm nhiều chuỗi có các giá trị lấy từ input
+    const user = {
+      userID: uuidv4(),
+      userName: u.value,
+      dateOfBirth: d.value,
+      address: a.value,
+    };
+    //push vaò mảng rỗng vừa lấy về
+    users.push(user);
+    //chuyển mảng có dữ liệu sang JSON và đẩy dữ liệu lên local 
+    localStorage.setItem("users", JSON.stringify(users));
+    //chạy hàm declaration function được trinh bày ở dưới
+    render();
+  };
+
+ //tạo thêm event click cho button mới để đăng xuất
+  l.onclick = () => localStorage.removeItem("users");
+  //khai báo function render có tác dụng đẩy dữ liệu tư local ra giao diện
+  function render() {
+    //khai báo lại mảng sau khi đã có dữ liệu và lấy về tư local
+    const users = JSON.parse(localStorage.getItem("users")) ?? [];
+    //push mảng ra html ở vị trí thẻ có id là "t" theo dạng map với giá trị
+    //tùy biến từ input và linh hoạt nhờ ${}. join() lại cho phù hơp để kết thúc
+    t.innerHTML = users.map(user => `
+      <tr>
+        <td>${user.userID}</td>
+        <td>${user.userName}</td>
+        <td>${user.dateOfBirth}</td>
+        <td>${user.address}</td>
+      </tr>
+    `).join("");
+  }
+</script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+    <script src="./tn.js"></script>
+  </body>
+</html>
